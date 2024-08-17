@@ -25,7 +25,7 @@ function Todos({handleEditTodo}) {
                                 return (
                                     <tr key={todo.id} className="odd:bg-slate-100">
                                         <td className="py-2 font-semibold">{index + 1}</td>
-                                        <td className="py-2 font-semibold">{todo.text}</td>
+                                        <td className={`py-2 font-semibold ${todo.status ? 'line-through' : ''}`}>{todo.text}</td>
                                         <td className="py-2">
                                             <DropdownMenu todo={todo} handleEditTodo={handleEditTodo} />
                                         </td>
