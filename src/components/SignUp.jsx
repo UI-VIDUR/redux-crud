@@ -1,17 +1,21 @@
-import React, {useState} from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import React, {useContext, useState} from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { UserContext } from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
+
 
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-//   const [user, setUser] = useState("");
   const [loading, setLoading] = useState(false)
+
+  const {user, auth} = useContext(UserContext)
+
+  const navigate = useNavigate()
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
-    const auth = getAuth();
     setLoading(true)
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password)
@@ -20,6 +24,7 @@ function SignUp() {
       setEmail('')
       setPassword('')
       setError('')
+      navigate('/dashboard')
     } catch (error) {
       setError(error.message)
       console.error('Error signing up:', error)

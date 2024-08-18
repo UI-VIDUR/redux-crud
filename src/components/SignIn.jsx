@@ -1,5 +1,7 @@
 import { browserLocalPersistence, getAuth, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
+import {UserContext} from '../contexts/UserContext'
+import { useNavigate } from "react-router-dom";
 
 function SignIn() {
 
@@ -7,10 +9,12 @@ function SignIn() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
 
+    const {auth, user} = useContext(UserContext)
+
+    const navigate = useNavigate()
+
     const handleSignIn = async (e) => {
         e.preventDefault();
-
-        const auth = getAuth()
 
         try {
             // await setPersistence(auth, browserLocalPersistence)
@@ -19,6 +23,7 @@ function SignIn() {
             setEmail('')
             setPassword('')
             setError(null)
+            navigate('/dashboard')
         } catch (error) {
             setError(error.message)
         }
